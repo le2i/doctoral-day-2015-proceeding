@@ -1,0 +1,38 @@
+% include the figures path relative to the master file
+\graphicspath{ {./content/intro/figures/} }
+
+\section{Introduction}
+\label{sec:intro}  % \label{} allows reference to this section
+
+Malignant melanoma is the deadliest type of skin cancer, accounting for the vast majority of skin cancer deaths~\cite{CancerFactsFigures2014}. 
+According to latest reports, melanoma causes over 20,000 deaths annually in Europe~\cite{forsea2012melanoma}. 
+In 2014, the American Cancer Society also reported that the number of new diagnosed cases is 76,100 with 9710 estimated deaths~\cite{CancerFactsFigures2014}. 
+%Nevertheless, early diagnosis play a key role since that melanoma being the most treatable kind of cancer.
+Nevertheless, melanoma is the most treatable kind of cancer if diagnosed early. 
+
+The clinical diagnosis of early stage melanoma is commonly based on the ``ABCDE'' rule~\cite{abbasi2004early}, defined as Asymmetry, irregular Borders, variegated Colours, Diameters greater than \SI{6}{\milli \metre} and Evolving stages over time. 
+In addition, the clinical diagnosis of melanoma is performed through visual inspection and deep analysis of the lesion, using clinical imaging techniques such as dermoscopic imaging. 
+However, these inspections and analysis are not easy tasks due to challenges such as similarity of the different lesion types (dysplastic and melanoma) and the necessity to perform patient follow-up over years.
+Therefore, the research communities have dedicated their efforts to develop computerized lesion analysis algorithms for classification of melanoma lesions. 
+However, akin to other medical applications, the percentage of melanoma cases in comparison with benign and dysplatic cases is far less. 
+This problem is frequently referred as ``class imbalanced'' problem~\cite{prati2009data} and has been encountered in multiple areas such as telecommunication managements, bioinformatics, fraud detection, and medical diagnosis. 
+Imbalanced data substantially compromise the learning process since most of the standard machine learning algorithms expect balanced class distribution or an equal misclassification cost~\cite{he2009learning}.
+
+Medical data are prone to such drawbacks due to the fact that the portion of diseased samples or patients is far lower than healthy cases.
+Furthermore, the detection and classification of minority malignant cases are highly essential so that the \ac{se} of developed algorithms needs to be maximized.
+Consequently, the problem of imbalanced data is usually addressed by employing different techniques which do not vitiate the topology of the data.
+Despite the fact that classification of malignant melanoma has been extensively studied~\cite{rastgoo2015automatic}, up to our knowledge, only two works tackled the issue implied by imbalanced dataset~\cite{barata2013two,celebi2007methodological}.
+Barata~\etal generate new synthetic samples by adding a Gaussian noise with fixed parameters to the samples belonging to the minority class~\cite{barata2013two}.
+Celebi~\etal over-sampled their dataset using \ac{smote}~\cite{chawla2002smote} to improve the \ac{se} of their algorithm~\cite{celebi2007methodological}.
+
+This paper provides an insight to the specific problem of classification of imbalanced dataset for malenoma. 
+To proceed, we review different techniques proposed by the machine learning community and compile a comprehensive quantitative evaluation. The rest of this paper is organized as follows: an overview of the classification framework designed to investigate data balancing techniques is presented in Sect.\,\ref{sec:mm} while these strategies are described in Sect.\,\ref{sec:met}. A quantitative evaluation is discussed in Sect.\,\ref{sec:exp-res} followed by a concluding section.
+
+
+% Some stuff that emac's colegues use
+%%% Local Variables: 
+
+%%% mode: latex
+%%% TeX-master: "../../master"
+%%% End: 
+

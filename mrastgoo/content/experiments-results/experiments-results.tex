@@ -1,0 +1,79 @@
+% include the figures path relative to the master file
+\graphicspath{ {./content/Experiments-results/figures/} }
+
+\input{./content/experiments-results/figures/evaluation_corolary_def.tex}
+\begin{figure}
+
+  \def\myRadius{.65cm}
+  \def\vennSpace{(0,0) rectangle (2.6cm,1.6cm)}
+  \def\predictedCircle{(.8cm,.8cm) circle (\myRadius)}
+  \def\actualCircle{(1.8cm,.8cm) circle (\myRadius)}
+  \def\myLabelRadius{.450cm}
+
+	\subfloat[][Confusion matrix with truly and falsely positive samples detected (TP, FP) in the first row, from left to right and the falsely and truly negative samples detected (FN, TN) in the second row, from left to right.]{
+    \label{fig:evaluation:confusion_matrix}
+    \begin{tikzpicture}
+      \node at (0,0){
+          \begin{tabular}{
+            >{\centering}m{1em} >{\centering}m{1em} >{\centering}m{1in} >{\centering\arraybackslash}m{1in}}
+            %c>{\centering}m{2em}ccc}
+            & & \multicolumn{2}{c}{ Actual Class }\\
+            & & A+ & A- \\
+            %\parbox[t]{2mm}{\multirow{2}{*}{\rotatebox[origin=c]{90}{\usebox \centering Predicted Class}}}& P+ &  \tikz{\tp} & \tikz{\fp} \\
+            \multirow{3}{*}{\rotatebox[origin=c]{90}{Predicted Class}}& P+ &  \tikz{\tp} & \tikz{\fp} \\
+            & P- & \tikz{\fn} & \tikz{\tn}
+          \end{tabular}
+        };
+    \end{tikzpicture}
+  }
+\\
+  \centering
+
+	\subfloat[][\acl*{se} and \acl*{sp} evaluation, corresponding to the ratio of the doted area over the blue area.]{
+    \label{fig:evaluation:roc_axis}
+    \begin{tikzpicture}
+      \def\seEquation{$SE = \frac{TP}{TP+FN}$}
+      \def\spEquation{$SP = \frac{TN}{TN+FP}$}
+      \node[label={[]below:\seEquation}](se){\tikz{\se}};
+      \node[right=5pt of se, label={[]below:\spEquation}]{\tikz{\sp}};
+      % \node[label={[]right:\seEquation}](se){\tikz{\se}};
+      % \node[below=5pt of se, label={[]right:\spEquation}]{\tikz{\sp}};
+    \end{tikzpicture}
+  }
+
+  \caption{Evaluation metrics:
+              \protect\subref{fig:evaluation:confusion_matrix} confusion matrix,
+              \protect\subref{fig:evaluation:roc_axis} \acl*{se} - \acl*{sp}
+          }
+  \label{fig:evaluation}
+\end{figure}
+
+\section{Experimental Results}
+\label{sec:exp-res} 
+
+The classification results are reported in Table~\ref{tab:tab1} using the aforementioned features, the \ac{rf} classifier and the different imbalancing techniques presented in Sect.\,\ref{sec:met}. 
+These results are compiled in terms of average \ac{se} and \ac{sp} over 10 runs of the cross-validation.
+The visual and analytic interpretation of these evaluation measures are depicted in Fig.\,\ref{fig:evaluation}.
+Table~\ref{tab:tab1} can be divided into three main parts representing the results using imbalance data (IB), the balancing in the data space \ac{os} and the balancing in the feature space.
+These strategies are separated by a double horizontal line.
+The strategies performed in the feature space are subdivided into either \ac{os} or \ac{us} or a combination of \ac{os} follow by \ac{us} (see horizontal dashed line in Table~\ref{tab:tab1}).
+The two highest \ac{se} for each feature set are highlighted in dark and light gray cell colors, respectively. 
+
+The obtained results indicate that balancing techniques are essential and improve the classification performance. 
+%Certainly, some techniques are more subjects to the feature representations than others. 
+However, the improvements in comparison to imbalanced classification is evident. 
+For this case study the \ac{us} techniques outperform the \ac{os} techniques. 
+Due to the characteristics similarities of melanoma and dysplastic lesions, it is expected to have correlated feature space among melanoma and dysplastic lesions. 
+Subsequently, the miss-leading samples could be removed using \ac{us} and lead to better performance.
+Specifically to our purpose, \ac{nm2} is the algorithm maximizing the sensitivity and in overall, \ac{nm} algorithms perform the best on our dataset. 
+However, \ac{ncr} algorithm (see results highlighted in blue in Table~\ref{tab:tab1}) achieves the best performance, considering a trade-off between \ac{se} and \ac{sp}. 
+Focusing only on \ac{os} techniques, \ac{os} in data space outperforms the techniques performing in feature space.
+
+%Table~\ref{tab:tab1} show the obtained results in terms of 
+
+% Some stuff that emac's colegues use
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "../../master"
+%%% End: 
+

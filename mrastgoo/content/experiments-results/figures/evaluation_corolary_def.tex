@@ -1,0 +1,112 @@
+\colorlet{circle edge}{blue!50}
+\colorlet{circle area}{blue!20}
+
+
+% Definition of circles
+% \def\myRadius{1.5cm}
+% \def\vennSpace{(0,0) rectangle (6cm,4cm)}
+% \def\predictedCircle{(2cm,2cm) circle (\myRadius)}
+% \def\actualCircle{(4cm,2cm) circle (\myRadius)}
+% \def\myLabelRadius{1.3cm}
+
+\def\myRadius{.75cm}
+\def\vennSpace{(0,0) rectangle (3cm,2cm)}
+\def\predictedCircle{(1cm,1cm) circle (\myRadius)}
+\def\actualCircle{(2cm,1cm) circle (\myRadius)}
+\def\myLabelRadius{.60cm}
+
+\tikzset{fillbase/.style={fill=circle area, draw=circle edge, thick},
+         filled/.style={pattern=crosshatch dots, draw=circle edge, thick},
+         outline/.style={draw=circle edge, thick}}
+
+\def\drawPredicted{
+    \draw[outline] \predictedCircle node (x){}; % {$\bullet$};
+    \node [above left=\myLabelRadius of x, anchor=center, outer sep=0](p){$P$};
+    \node  at (p.300) {$+$};
+    \node  at (p.120) {$-$};
+}
+
+\def\drawActual{
+    \draw[outline] \actualCircle node (x){}; % {$\bullet$};
+    \node [above right=\myLabelRadius of x, anchor=center, outer sep=0](a){$A$};
+    \node  at (a.60) {$-$};
+    \node  at (a.240) {$+$};
+}
+
+% Define the different metrics: tp, tn, fp, fn
+\def\tp{
+      \draw[outline] \vennSpace;
+      \begin{scope}
+        \clip \predictedCircle;
+        \fill[filled] \actualCircle;
+      \end{scope}
+      \drawPredicted
+      \drawActual
+      % \draw[outline] (current bounding box.south west)
+      %   rectangle (current bounding box.north east);
+}
+
+\def\tn{
+      \draw[outline] \vennSpace;
+  \begin{scope}[even odd rule]
+    \fill[filled] \vennSpace
+      \actualCircle
+      \predictedCircle;
+    \clip \actualCircle;
+    \fill[white] \predictedCircle;
+  \end{scope}
+  \drawPredicted
+  \drawActual
+}
+
+\def\fp{
+      \draw[outline] \vennSpace;
+      \begin{scope}
+        \clip \predictedCircle;
+        \fill[filled, even odd rule]
+              \predictedCircle \actualCircle;
+      \end{scope}
+      \draw[outline] \vennSpace;
+      \drawPredicted
+      \drawActual
+}
+
+\def\fn{
+      \draw[outline] \vennSpace;
+      \begin{scope}
+        \clip \actualCircle;
+        \fill[filled, even odd rule]
+              \actualCircle \predictedCircle;
+      \end{scope}
+      \draw[outline] \vennSpace;
+      \drawPredicted
+      \drawActual
+}
+
+\def\se{
+  \fill[fillbase] \actualCircle;
+      \begin{scope}
+        \clip \predictedCircle;
+        \fill[filled] \actualCircle;
+      \end{scope}
+      \draw[outline] \vennSpace;
+      \drawPredicted
+      \drawActual
+}
+
+
+\def\sp{
+  \fill[fillbase, even odd rule]
+    \vennSpace \actualCircle;
+  \begin{scope}[even odd rule]
+    \fill[filled] \vennSpace
+      \actualCircle
+      \predictedCircle;
+    \clip \actualCircle;
+    \fill[white] \predictedCircle;
+  \end{scope}
+  \draw[outline] \vennSpace;
+  \drawPredicted
+  \drawActual
+  }
+

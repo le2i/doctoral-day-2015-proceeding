@@ -1,0 +1,23 @@
+
+%% Acutal Figure 
+\begin{tikzpicture}
+\newcommand*\rot{\rotatebox{90}}
+\newcommand*\OK{\ding{51}}
+  \node at (0,0){
+      \begin{tabular}{rrccc}
+        \multicolumn{2}{c}{ Predicted Class } &
+        \multicolumn{2}{c}{ Actual Class }\\
+        & & A+ & A- \\
+        & P+ &  \tikz{\tp} & \tikz{\fp} \\
+        & P- & \tikz{\fn} & \tikz{\tn}
+      \end{tabular}
+    };
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  \def\seEquation{$SE = \frac{TP}{TP+FN}$}
+  \def\spEquation{$SP = \frac{TN}{TN+FP}$}
+  \node[label={[]right:\seEquation}](se){\tikz{\se}};
+  \node[below=5pt of se, label={[]right:\spEquation}]{\tikz{\sp}};
+\end{tikzpicture}
+
