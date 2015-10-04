@@ -1,0 +1,56 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+%% Latex documents that need direct input
+\input{latex/filesystem/package.tex}        % contains the latex packages
+\input{content/frontmatter.tex}             % contains the Title and Autor info
+\input{latex/filesystem/fileSetup.tex}      % contains package and variables init.
+\input{content/acronym_definition.tex}      % contains the acronims
+
+\acprfinalcopy % *** Uncomment this line for the final submission
+\def\acprPaperID{438} % *** Enter the acpr Paper ID here 
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+% Pages are numbered in submission mode, and unnumbered in camera-ready                                                                
+\pagestyle{empty}
+
+
+%% Select inputing only one part of the document
+%\includeonly{content/intro/intro}   % the file wihtout .tex
+%\includeonly{content/other/other_content}
+
+\addbibresource{./content/literature_review.bib}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\acresetall  % reset the acronyms from the title (if any)
+As long as breast cancer remains the leading cause of cancer deaths among female population world wide, developing tools to assist radiologists during the diagnosis process is necessary.
+However, most of the technologies developed in the imaging laboratories are rarely integrated in this assessing process, as they are based on information cues differing from those used by clinicians.
+In order to grant \ac{cad} systems with these information cues when performing non-aided diagnosis, better segmentation strategies are needed to automatically produce accurate delineations of the breast structures.
+This paper proposes a highly modular and flexible framework for segmenting breast tissues and lesions present in \ac{bus} images.
+This framework relies on an optimization strategy and high-level descriptors designed analogously to the visual cues used by radiologists.
+The methodology is comprehensively compared to other sixteen published methodologies developed for segmenting lesions in \ac{bus} images.
+The proposed methodology achieves similar results than reported in the state-of-the-art.
+%The achieved results state that the proposed methodology behaves accordingly to the state-of-the-art.
+\end{abstract}
+
+%\keywords{Breast Ultra-Sound, BI-RADS lexicon, Optimization based Segmentation, Machine-Learning based Segmentation, Graph-Cuts}
+
+%% Incldue the content without .tex extension
+\acresetall  % reset the acronyms from the abstract
+\include*{content/intro/intro}          % the file wihtout .tex
+\include*{content/method/method}
+\include*{content/method/applied}
+%\include*{content/features/features}
+\include*{content/results/results}
+
+\section{Conclusions}
+This work presents a segmentation strategy to delineate lesions in \ac{bus} images using an optimization framework that takes advantage of all the facilities available when using \ac{ml} techniques.
+Despite the limitation that the final segmentation is subject to the super-pixels' boundaries, the \ac{aov} results reported here are similar to those reported by other methodologies in the literature.
+A higher \ac{aov} result can be achieved by refining the delineation resulting from our proposed framework by post-processing it with an \ac{acm}. In this manner, the contour constraints could be applied to achieve a more natural delineation.
+
+{\small 
+\printbibliography                                                                                                                     }
+
+
+\end{document}

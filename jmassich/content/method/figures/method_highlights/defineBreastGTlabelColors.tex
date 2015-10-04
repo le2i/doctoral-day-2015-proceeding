@@ -1,0 +1,30 @@
+% This tex, loads the Breast GT pallete if is not defined.
+% The document takes advantage of the xcolor package primitive 
+% \def\@ifundefinedcolor#1{\@ifundefined{\string\color@#1}}
+% therefore it xcolor package is needed or the definitions needs to be added.
+% 
+% TODO: 
+% 	create a more generic script that checks if all the packages are there otherwise loads them.
+%	or defines the missing primitive.
+%   take a look at: \@ifpackageloaded{<name>}{<true>}{<false>}
+% 					http://tex.stackexchange.com/questions/16199/test-if-a-package-or-package-option-is-loaded
+
+\makeatletter
+\newcommand{\colorprovide}[2]{%
+  \@ifundefinedcolor{#1}{\colorlet{#1}{#2}}{}}
+
+\newcommand{\defineColorWhenNoExist}[3]{%
+  \@ifundefinedcolor{#1}{\definecolor{#1}{#2}{#3}}{}}
+\makeatother
+
+\defineColorWhenNoExist{bgColor}{rgb}{0.0000, 0.0000, 0.0000}
+\defineColorWhenNoExist{boundaryColor}{rgb}{0.8784, 0.8784, 0.7529}
+\defineColorWhenNoExist{chestWallColor}{rgb}{0.5294, 0.7843, 0.6078}
+\defineColorWhenNoExist{fatColor}{rgb}{0.9804, 0.5882, 0.1176}
+\defineColorWhenNoExist{fibroGlandColor}{rgb}{1.0000, 1.0000, 0.0000}
+\defineColorWhenNoExist{lesionColor}{rgb}{1.0000, 0.2510, 0.0000}
+\defineColorWhenNoExist{lungColor}{rgb}{0.2353, 0.6078, 0.8235}
+\defineColorWhenNoExist{pectoralColor}{rgb}{0.6510, 0.3490, 1.0000}
+\defineColorWhenNoExist{ribColor}{rgb}{0.0000, 0.4510, 0.1961}
+\defineColorWhenNoExist{skinColor}{rgb}{0.9804, 0.7255, 0.7451}
+\defineColorWhenNoExist{unkTissueColor}{rgb}{0.6000, 0.3020, 0.2510}
