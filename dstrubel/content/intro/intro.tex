@@ -1,0 +1,26 @@
+% include the figures path relative to the master file
+\graphicspath{ {./content/intro/figure/} }
+
+\section{Introduction}
+
+The problem of the optimal positioning of a camera network is complex and no efficient solution exits to date to solve it. The aim of this work is to provide a flexible and tunable solution to this problem and, doing so, to analyze the performances of the current state-of-the-art techniques. The final objective of our research is to design a global optimization scheme allowing a camera network to self-organize and self-reconfigure, according to priorily fixed constraints, in order to ensure a full coverage of a given scene. The scheme must suit with any kind of cameras, such as perspective, fish-eye, catadioptric and, possibly RGB-D and ToF.  As a perspective, self-organization and self-reconfiguration should be performed in real time. Within this context, it is important to assess the actual performances and limits of the state-of-the-art algorithms. First step, which will be detailed in this paper, is to study and compare two standard algorithms, namely the Random Walk (RW) and the Particle Swarm Optimization (PSO), in terms of speed (i.e. running time) and quality (i.e. coverage rate). 
+
+\subsection{Related works}
+Sensor positioning problem has been investigated since a few decades, mainly for videosurveillance \cite{chin1988optimum}. Without any additional constraint, this problem is NP-Hard as stated in \cite{chin1988optimum,zhao2008optimal} for the Watchman Route Problem (which is very similar to the optimal positioning of a camera network). Two solutions have been proposed. The first one is based on Art Gallery Problem (AGP) \cite{moeininouvelle,erdem2006automated}. The second way is using the hypothesis of work from Wireless Sensor Networks \cite{song2008decentralized,wang2013line} and try to find the best position for creating an efficient network for collecting data with any kind of sensor. However, the solution propose of this problem is working only with some constraint like if the sensor has 360 degrees field of view, no obstacle.
+ One of the most efficient algorithm used is PSO as detailed in \cite{zhou2011optimal,reddy2012camera}. In \cite{zhou2011optimal}, some experimental results are provided and one solution running in real time is proposed. However, the scene used for the experiments is rather small and many cameras are employed to fully cover it. 
+On the other hand, \cite{reddy2012camera} uses a cost function but the cost function is not only focused on the position for surveillance, but also handling resolution and lighting.
+This paper also introduces the concept of “acceptable response”, allowing non-optimal/sub-optimal solutions. If the coverage score is good enough, the solution is accepted and not locked by the research of an optimal. The article uses the paradigm of the AGP and PSO algorithm. The main drawback of this paper is the use of a greedy implementation of PSO and greed algorithm cannot adapt to the environment at time. 
+Our paper is directly based on \cite{zhou2011optimal,reddy2012camera}, attempting to extend it by adding degrees of freedom and a new optimization scheme. 
+\subsection{Objectives }
+The objective is the creation of a video surveillance system that can be extremely adaptable and dynamic to meet the current requirements including monitoring in key areas. The first goal is to position the cameras to get the best coverage. Although coverage is important, optimizing the coverage may be detrimental to the image quality. 
+The objectives:
+1) Optimization of the camera positioning depending on a dynamic environment, the coverage area and image quality 
+2) Real time optimization of camera motion depending on the freedom of movement for each camera of the network
+But the aim of this paper is to find the best solution to cover a room with a fix number of cameras. It’s the first step of the video surveillance project. 
+
+% Some stuff that emac's colleagues use
+%%% Local Variables:
+%%% mode: late
+%%% TeX-master: "../../master.tex"
+%%% End: \section{introduction}
+
