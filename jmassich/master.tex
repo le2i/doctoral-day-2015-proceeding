@@ -39,6 +39,17 @@ The proposed methodology achieves similar results than reported in the state-of-
 %% Incldue the content without .tex extension
 \acresetall  % reset the acronyms from the abstract
 \include*{content/intro/intro}          % the file wihtout .tex
+\input{./content/method/figures/framework/framework_icons}
+\begin{figure*}[htpb]
+  \scriptsize
+  \centering
+  \input{./content/method/figures/framework/framework}
+  % \includegraphics[width=0.9\linewidth]{method}
+  \caption{Conceptual block representation of the segmentation methodology.}%\footnotemark}
+    %\footnote{\cref{fig:methodTerms} illustrates the $\mathcal{S}$, $D(\cdot)$, and $V(\cdot)$ for the applied case of delineating breast structures in \ac{us} data.}
+    %\footnote{(todo:add all the names of the elements in the figure)}
+  \label{fig:method}
+\end{figure*}
 \include*{content/method/method}
 \include*{content/method/applied}
 %\include*{content/features/features}
