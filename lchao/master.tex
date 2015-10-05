@@ -1,0 +1,132 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+%% Latex documents that need direct input
+\input{latex/filesystem/package.tex}        % contains the latex packages
+\input{content/frontmatter.tex}             % contains the Title and Autor info
+\input{latex/filesystem/fileSetup.tex}      % contains package and variables init.
+\input{content/acronym_definition.tex}      % contains the acronims 
+
+\acprfinalcopy % *** Uncomment this line for the final submission
+\def\acprPaperID{438} % *** Enter the acpr Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+\pagestyle{empty}
+
+
+%% Select inputing only one part of the document
+%\includeonly{content/intro/intro}   % the file wihtout .tex
+%\includeonly{content/other/other_content}
+ 
+\addbibresource{references.bib}
+
+\begin{document} 
+\maketitle 
+
+\begin{abstract}
+Real-time digital image/video processing is a widely used computer vision/graphics technique. For the purpose of high performance designs, variant computation platforms are make available to the engineers with affordable prices. However, these sophisticated devices usually require a specific implementation framework to transplant the desired algorithm from software environment into hardware environment. Since this process is quite effort-consuming, finding a new approach that can accelerate the development cycles the image/video processing applications becomes a new challenge.
+This work focus on fast SW/HW Co-design Framework for real-time image/video processing. After a carefully methodology exploration to the currently available hardware platforms, we select Field Programmable Gate Arrays (FPGAs) as our target platform due to its high performances in terms of efficiency-cost. Next, we base our research on an improved C-synthesis design flow, and development a novel Code and Directive Manipulation Strategy for High-Level Synthesis (CDMS4HLS). Finally, intensive experiment demonstrate that, compared with the other similar approaches, our method can essentially reduce the effort of the development cycles and potentially improve the performances of final implementations.
+%\keywords{\acl{dme}, \acl{oct}, \acs{dme}, \acs{oct}, \ac{lbp}.}
+\end{abstract}
+
+\section{Introduction}
+\label{sect:introduction}
+In image science, image/video processing is one of the applications of signal processing technics. It includes methods for analyzing, processing or treating images. The motivation of this field is to improve the target images to meet the requirements in visual, mental or other technical terms. Since images are usually stored in digital format currently, image/video processing refers to digital image/video processing in most cases.
+
+With the fast development of digital signal processing technics, image/video processing is widely used in variant fields, such as satellite image analyzing, computer-aided medical diagnosis, face identification, microscope image processing and car barrier detection, etc.. Meanwhile, the algorithms for image processing become increasingly complex and computationally intensive. For the purpose of performances, series of computation platforms are developed and made available with an affordable price, i.e. Graphics Processing Unit (GPU), Digital Signal Processor (DSP), Centeral Processing Unit (CPU) and FPGA etc.. Since these sophisticated devices have quite different architectures, engineers have to transplant their designs from software environments (i.e. Matlab, OpenCV and C/C++) into specific hardware environments within different development frameworks, i.e. Message Passing Interface (MPI) for CPU, Compute Unified Device Architecture (CUDA) for GPU or Hardware Description Language (HDL) for FPGA etc..
+
+Implementing a design from software environment into hardware environment is a painful and effort-consuming process. This is because the languages used for hardware configuration are usually low-abstract, which are inconvenient for algorithm specification. In order to improve both productivity and performances of the desired designs, many image research and development communities base their works on a streamlined design flow, known as SW/HW Co-design.
+
+SW/HW Co-design is an important approach to ensure an efficient final implementation of the product. In order to further improve the research and development productivity, series of Computer Aided Software Engineering (CASE) based software
+tools are put into operation. Moreover, the progresses of software engineering increasingly provide opportunities to seek new design methodology with better productivity.
+
+We focus our work on the SW/HW Co-design methodology exploration for real-time image/video processing development. The main purpose of this research project is to propose a new methodology to quickly conceive and realize high-performance implementations for real time image/video processing with high adaptability capacity. According to the achievements of a careful bibliography study, we base the new approach on the High-Level Synthesis (HLS) SW/HW Co-design framework for FPGAs, and improve it according a source-to-source compiler. During this effort, a novel CDMS4HLS is developed.
+
+In this new SW/HW Co-design framework, we provide multiple advantages:
+\begin{itemize}
+\item[-] The new approach provides a C/C++ development environment, which allows engineers to realize rapid prototyping of signal and image processing on target devices ignoring completely hardware aspects.
+\item[-] The new approach performs an open and adaptive framework which allows parallel optimizations in different levels, i.e. FLP, LLP, ILP and DLP etc.. Nevertheless, the optimizations can easily made and don't require much hardware knowledge.
+\item[-] Comparing with the conventional methodologies, the new approach doesn't make any negative effects to the designs in terms of power-efficiency, and the loss of accuracy or cost-efficiency due to the hardware devices are acceptable in most cases if it exists.
+\end{itemize}
+
+Experiment results demonstrate that our approach can provide the engineers a quite software-convenient environment for development and optimization as well. Furthermore, our approach can make more efficient use of the hardware resources than the other similar FPGA design flows and provide higher performances than the implementations on the other computation platforms.
+
+After the introduction section, the remains of this thesis is organized as follows: Section \ref{sect:related works} explores the state of the art of HLS based FPGA design flows, Section \ref{sect:Souce-to-Source compilation based HLS design flow} presents the proposed code and directive manipulation strategy for it, Section \ref{sect:experiments} discusses the experiment results and a conclusion is given in the final section.
+
+\section{Related works}
+\label{sect:related works}
+Over the past twenty years, High-Level Synthesis (HLS) technique has made great progress. Recently, some robust and mature HLS SW/HW Co-design development frameworks have been made available to engineers, i.e. Vivado\_HLS of Xilinx \cite{59} and Catapult C Synthesis Work Flow \cite{60}. These convenient tools allow to specify targeted hardware behaviour in high abstract levels rather than RTL, and then create the Hardware Description Language (HDL) specification of desired FPGA implementations from its software prototype through an automatical C-to-RTL transformation. This approach can greatly accelerate the developments by freeing the designers from the boring work of hardware implementing \cite{30}.
+
+        \begin{figure}[t]
+        \centering
+        \includegraphics[width=\linewidth]{DesignFlow4HLS.png}
+        \caption{Manual and source-to-source compiler based HLS design framework.}
+        \label{DesignFlow4HLS}
+        \end{figure}
+
+Fig.\ref{DesignFlow4HLS}-(a) illustrates the framework of HLS-based FPGA designs. First of all, designers specify the software prototype of targeted algorithm in C-like languages and debug it in a test bench using common C compilers. Next, the confirmed code is imported into a HLS tools as original sources for C-to-RTL synthesis. During this process, the designers configure the synthesis constraints/directives to make their implementations suitable for different design requirements. At last, the generated HDL specification is simulated by a RTL simulator like ModelSim, and then exported as IP-blocks. This approach doesn't require specific knowledge of both software and hardware, so users can concentrate their attentions only on the algorithm specifications in high abstract levels. However, with the widespread of HLS tools in the ES (Embedded System) world, more issues related to time control, execution speed and consummation etc. emerge. In order to find out the best design solution, designers have to configure repeatedly the directives, and sometimes even have to re-specify their algorithms to ensure the input sources to be detectable by HLS processes. This is a quite painful and effort-costly job even for an experienced SW/HW Co-design engineer.
+
+The issue of HLS design flow discussed above is caused by three major reasons: a) the C-language suitable to HLS tools is just a subset of C-like languages, we therefore cannot benefit to all the C advantages during the algorithm specification, b) different designers and algorithms may result in different code structures and styles, so the data dependency of input sources sometimes can't be perfectly determined by scheduling process for optimization and c) the existing synthesis tools provide dozens of directives for hardware constraints which requires the designers to be quite familiar with synthesis tools. For the purpose to further simplify the development cycles, a source-to-source (S2S) transformation based HLS design flow was developed (see Fig.\ref{DesignFlow4HLS}-(b)). In this new framework, a S2S compiler is inserted between the software prototyping and synthesis process. In contrast with the manual specification and configuration, this bridge tool automatically transforms the original code into the sources more efficient. For example, Alle et al. propose an efficiency improvement approach for loop pipelining in HLS through a semi-automatic source-to-source transformation in \cite{57}.
+
+\section{souce-to-source compilation based HLS design flow}
+\label{sect:Souce-to-Source compilation based HLS design flow}
+C-to-RTL synthesis is the key technique of HLS. It offers many opportunities to optimize the designs in different hierarchies, including function level, loop level, instruction level and data level etc.. Therefore how to perform an efficient source code and perfectly combine these optimization strategies together becomes a new challenge for engineers. This is usually a painful and time-costly work because it has to be repeated several times until an acceptable, even if the best solution is found. Thus, some C-to-C compilers emerges. That effectively raise the productivity of such design by automatically improving the efficiency of manual code.
+
+This section describes a C-to-C compilation strategy for HLS, CDMS4HLS, which can streamline the code optimization process. Unlike some existing research productions, we base this work on the special characteristics of HLS in terms of synthesis process rather than borrow some achievements from other efforts about parallel computing for high performance computers. The over-all structure of CDMS4HLS is shown in Fig.\ref{CDMS4HLS}, which consists of function inline, loop fusion, symbolic expression manipulation, loop unwinding and array reshape. These 5 steps are effected on input source code in a proper order for the purpose to enable each optimization method to make a maximum effectiveness.
+
+        \begin{figure}[t]
+        \centering
+        \includegraphics[width=0.8\linewidth]{CDMS4HLS.png}
+        \caption{CDMS4HLS compilation process.}
+        \label{CDMS4HLS}
+        \end{figure}
+
+\section{Experiments}
+\label{sect:experiments}
+\label{Comparison experiment}
+    \begin{figure}
+    \centering
+    % Requires \usepackage{graphicx}
+    \includegraphics[width=0.8\linewidth]{Experiments.png}\\
+    \caption{Implementing flow with different code optimization methods, including PolyComp, manual directive configuration within Vivado\_HLS and CDMS4HLS.}
+    \label{Experiments}
+    \end{figure}
+
+    \begin{figure}
+    \centering
+    % Requires \usepackage{graphicx}
+    \includegraphics[width=\linewidth]{LatencySpeedupComparison.png}\\
+    \caption{Latency speedup comparison.}
+    \label{LatencySpeedupComparison}
+    \end{figure}
+We compare the proposed approach with other two functionally similar design flows (see Fig.\ref{Experiments}) using the source code of four basic image processing algorithms, including $3\times 3$ filter for RGB images, matrix product (MatPro), Image Segmentation using Sobel operator (ImSeg) and Stereo Matching using sum of squared difference (StMatch). We base the first design flow on two improved conventional source-to-source C/C++ compilers: an improved PoCC polyhedral framework \cite{54,65,66} and the Generic Compiler Suite (GeCoS) \cite{55,56,57} (defined as PolyComp), while the other one on the Vivado\_HLS Design Suite \cite{61} (defined as Vivado\_HLS). In order to obtain an unbiased conclusion, all the source codes are synthesized using AutoESL and their data formats are normalized to 32-bit integer numbers. Considering that PolyComp does not have the ability of I/O interface manipulation, we set the I/O protocol of the target implementations as the default of the HLS tool used.
+
+The latency speedups of the three design flows with different algorithms are compared in Fig.\ref{LatencySpeedupComparison}. This result is normalized to the int\_32 original versions of the related algorithms. These three approaches respectively achieve an average of $19.01\times$, $22.19\times$ and $106.54\times$ speedups. This demonstrates that the proposed approach can gain more performance improvements in terms of latency consumption. Compared with the other designs, CDMS4HLS has the ability to manipulate the source code in a lower instructions level, which provide more optimization opportunities to HLS tools. Furthermore, our method can effectively reduce the transition number of the FSM behaviours of the target implementations. For example, the transition number of the MatPro optimized by CDMS4HLS is only half as many as PolyComp and Vivado\_HLS respectively. In additional, it should note that the acceleration gains due to the interface expending are not taken into account. That is, CDMS4HLS and Vivado\_HLS may achieve more speedups than PolyComp.
+
+\section{Conclusion}
+\label{sect:conclusion}
+
+This paper presents a novel source-to-source compilation strategy for High-Level Synthesis. Unlike the other studies, the features of HLS procedure and its existing tools are studied in detail. Basing on these efforts, we designed a customized
+code and directive manipulation strategy (CDMS4HLS) for it.
+
+The proposed approach improves the performances of the desired designs in various ways, including function and loop hierarchy optimization, symbolic expression manipulation and memory/interface protocol manipulation. In the experiments, we evaluate our approach using four basic algorithms and compare it with two other similar design flows: PolyComp and Vivado HLS. The results demonstrate that CDMS4HLS is an effective code optimization strategy which improves substantially the HLS based FPGA designs.
+
+For the future work, we plan to apply the FPGA design flow improved by the proposed method into some complex real-time image processing applications. Since computationally intensive algorithm may result in a complicate control flow and operation scheduling, more efforts are usually required for development and optimization. Testing and verifying CDMS4HLS according to a practical and complex case can further evaluate its feasibility for commercialization. Meanwhile, we hope that the efforts of this paper can bring some enlightenments to the studies for fast FPGA development framework.
+
+% %% Incldue the content without .tex extension
+% \acresetall  % reset the acronyms from the abstract
+% \input{content/intro/intro}          % the file wihtout .tex
+% \input{content/method/method} 
+% \input{content/experiment/experiment}
+% %\input{content/results/results}
+
+% \section{Conclusions}\label{sec:con}
+% The work presented here addresses the automatic classification of \ac{sdoct} data to identify subjects with \ac{dme} versus normal.
+% Based on the reported results, the low level volume 3D features and high level 2D features using patches achieve the most desirable results in the experimental setup presented here.
+% The comparison against different datasets and methodologies, highlights that:
+% regardless of using low or high level representations, volume signatures derived from \ac{lbp} texture show high discriminative power for distinguishing \ac{dme} vs normal volumes.
+
+{\small
+\printbibliography
+}
+
+\end{document} 
