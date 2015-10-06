@@ -1,0 +1,58 @@
+\documentclass[10pt,twocolumn,letterpaper]{article}
+
+%% Latex documents that need direct input
+\input{latex/filesystem/package.tex}        % contains the latex packages
+\input{content/frontmatter.tex}             % contains the Title and Autor info
+\input{latex/filesystem/fileSetup.tex}      % contains package and variables init.
+\input{content/acronym_definition.tex}      % contains the acronims 
+
+\acprfinalcopy % *** Uncomment this line for the final submission
+\def\acprPaperID{438} % *** Enter the acpr Paper ID here
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+% Pages are numbered in submission mode, and unnumbered in camera-ready
+\pagestyle{empty}
+
+
+%% Select inputing only one part of the document
+%\includeonly{content/intro/intro}   % the file wihtout .tex
+%\includeonly{content/other/other_content}
+ 
+\addbibresource{./content/literature_review.bib}
+
+\begin{document} 
+\maketitle 
+
+% \begin{abstract}
+% This paper addresses the problem of automatic classification of \ac{sdoct} data for automatic identification of patients with \ac{dme} versus normal subjects.
+% Our method is based on \ac{lbp} features to describe the texture of \ac{oct} images and we compare different \ac{lbp} features extraction approaches to compute a single signature for the whole \ac{oct} volume.
+% Experimental results with two datasets of respectively 32 and 30 \ac{oct} volumes show that
+% regardless of using low or high level representations, features derived from \ac{lbp} texture have highly discriminative power.% for the task on hand.
+% Moreover, the experiments show that the proposed method achieves better classification performances than other recent published works.
+% %\keywords{\acl{dme}, \acl{oct}, \acs{dme}, \acs{oct}, \ac{lbp}.}
+% \end{abstract}
+
+%% Incldue the content without .tex extension
+\acresetall  % reset the acronyms from the abstract
+%\input{content/intro/intro}          % the file wihtout .tex
+%\input{content/method/method} 
+%\input{content/experiment/experiment}
+%\input{content/results/results}
+
+% \section{Conclusions}\label{sec:con}
+% The work presented here addresses the automatic classification of \ac{sdoct} data to identify subjects with \ac{dme} versus normal.
+% Based on the reported results, the low level volume 3D features and high level 2D features using patches achieve the most desirable results in the experimental setup presented here.
+% The comparison against different datasets and methodologies, highlights that:
+% regardless of using low or high level representations, volume signatures derived from \ac{lbp} texture show high discriminative power for distinguishing \ac{dme} vs normal volumes.
+
+Most digital cameras use low dynamic range image sensors, these LDR sensors can capture only a limited luminance dynamic range of the scene~\cite{hang2014}, to about two orders of magnitude (about 256 to 1024 levels). However, the dynamic range of real-world scenes varies over several orders of magnitude (10.000 levels). To overcome this limitation, several methods exist for creating high dynamic range (HDR) image (expensive method uses dedicated HDR image sensor and low-cost solutions using a conventional LDR image sensor). Large number of low-cost solutions applies a temporal exposure bracketing. The HDR image may be constructed with a HDR standard method (an additional step called tone mapping is required to display the HDR image on conventional system), or by fusing LDR images in different exposures time directly, providing HDR-like~\cite{Gelfand2010} images which can be handled directly by LDR image monitors.
+
+Temporal exposure bracketing solution is used for static scenes but it cannot be applied directly for dynamic scenes or HDR videos since camera or object motion in bracketed exposures creates artifacts called ghost~\cite{Sen2012}, in HDR image. There are a several techniques allowing the detection and removing ghost artifacts (Variance based ghost detection, Entropy based ghost detection, Bitmap based ghost detection, Graph-Cuts based ghost detection ...)~\cite{Srikantha2012}, nevertheless most of these methods are expensive in calculating time and they cannot be considered for real-time implementations.
+
+The originality and the final goal of our work are to upgrade our current smart camera allowing HDR video stream generation with a sensor full-resolution ($1280 \times 1024$) at 60 fps~\cite{lapray2014}. The HDR stream is performed using exposure bracketing techniques (obtained with conventional LDR image sensor) combined with a tone mapping algorithm. In this paper, we propose an overview of the different methods to correct ghost artifacts which are available in the state of art. The
+selection of algorithms is done concerning our final goal which is real-time hardware implementation of the ghost detection and removing phases.
+
+{\small
+\printbibliography
+}
+
+\end{document} 
